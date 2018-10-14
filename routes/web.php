@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,15 +12,19 @@
 
 use Illuminate\Support\Facades\Storage;
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+Route::get(
+    '/welcome', function () {
+        return view('welcome');
+    }
+);
 
-Route::get('/', function () {
-    $json=Storage::disk('local')->get("quotes.json");
-    $json=json_decode($json, true);
+Route::get(
+    '/', function () {
+        $json=Storage::disk('local')->get("quotes.json");
+        $json=json_decode($json, true);
 
-    //dd($json[293550896950935552]);
+        //dd($json[293550896950935552]);
 
-    return view('quotes', ["quotes"=>$json[293550896950935552]]);
-});
+        return view('quotes', ["quotes"=>$json[293550896950935552]]);
+    }
+);
