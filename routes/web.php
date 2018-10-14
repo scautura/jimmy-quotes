@@ -11,6 +11,15 @@
 |
 */
 
-Route::get('/', function () {
+use Storage;
+
+Route::get('/welcome', function () {
     return view('welcome');
+});
+
+Route::get('/', function () {
+    $json=Storage::disk('local')->get("quotes.json");
+    $json=json_decode($json, true);
+
+    dd($json);
 });
