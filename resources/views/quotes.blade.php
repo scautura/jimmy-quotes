@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Jimmy Broadbent's Discord Quotes</title>
+        <title>{{ $guild->name }} Quotes</title>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
@@ -10,8 +10,7 @@
                     <tr>
                         <td>Quote number</td>
                         <td>Added By</td>
-                        <td>Author ID</td>
-                        <td>Author Name</td>
+                        <td>Author</td>
                         <td>Quote</td>
                     </tr>
                 </thead>
@@ -19,9 +18,8 @@
                     @foreach ($quotes as $quote)<tr>
                         <th scope="row">{{ $loop->iteration }}</td>
                         <td>{{ $quote["added_by"] }}</td>
-                        <td>{{ $quote["author_id"] }}</td>
-                        <td>{{ $quote["author_name"] }}</td>
-                        <td>{{ $quote["text"] }}</td>
+                        <td>@if (intval($quote["author_id"])==0){{ $quote["author_name"] }}@else{{ $users->where('id', intval($quote["author_id"]))->first()->name }}@endif</td>
+                        <td>{!! nl2br($quote["text"]) !!}</td>
                     </tr>
                 @endforeach
                 </tbody>
