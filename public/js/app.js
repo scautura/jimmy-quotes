@@ -47505,7 +47505,7 @@ exports = module.exports = __webpack_require__(49)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47866,6 +47866,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 function Quote(_ref, id) {
   var added_by = _ref.added_by,
@@ -47885,18 +47893,19 @@ function Quote(_ref, id) {
     return {
       quotes: [],
       fields: [{
-        key: 'id',
+        key: "id",
         sortable: true
       }, {
-        key: 'author_name',
+        key: "author_name",
         sortable: true
       }, {
-        key: 'text',
+        key: "text",
         sortable: false
       }],
       perPage: 25,
       currentPage: 1,
-      totalRows: 0
+      totalRows: 0,
+      filter: null
     };
   },
 
@@ -47914,6 +47923,10 @@ function Quote(_ref, id) {
         _this.mute = false;
         _this.totalRows = _this.quotes.length;
       });
+    },
+    onFiltered: function onFiltered(filteredItems) {
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
     }
   },
   created: function created() {
@@ -47932,6 +47945,49 @@ var render = function() {
   return _c(
     "div",
     [
+      _c(
+        "b-form-group",
+        { staticClass: "mb-0", attrs: { horizontal: "", label: "Filter" } },
+        [
+          _c(
+            "b-input-group",
+            [
+              _c("b-form-input", {
+                attrs: { placeholder: "Type to Search" },
+                model: {
+                  value: _vm.filter,
+                  callback: function($$v) {
+                    _vm.filter = $$v
+                  },
+                  expression: "filter"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "b-input-group-append",
+                [
+                  _c(
+                    "b-btn",
+                    {
+                      attrs: { disabled: !_vm.filter },
+                      on: {
+                        click: function($event) {
+                          _vm.filter = ""
+                        }
+                      }
+                    },
+                    [_vm._v("Clear")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c("b-table", {
         attrs: {
           striped: "",
@@ -47939,8 +47995,10 @@ var render = function() {
           items: _vm.quotes,
           fields: _vm.fields,
           "per-page": _vm.perPage,
-          "current-page": _vm.currentPage
-        }
+          "current-page": _vm.currentPage,
+          filter: _vm.filter
+        },
+        on: { filtered: _vm.onFiltered }
       }),
       _vm._v(" "),
       _c("b-pagination", {
