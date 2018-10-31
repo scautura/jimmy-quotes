@@ -35,33 +35,32 @@ Route::get(
 
         $users=App\DiscordUser::all();
 
-        foreach($quotes as $quote) {
-            if(App\DiscordUser::find(intval($quote["author_id"]))==null) {
+        foreach ($quotes as $quote) {
+            if (App\DiscordUser::find(intval($quote["author_id"]))==null) {
                 $user=new App\DiscordUser;
                 $user->id=intval($quote["author_id"]);
-                if(intval($quote["author_id"])!=0) {
-                    $user->name=$discord->user->getUser(["user.id" => intval($quote["author_id"])])->username;
+                if (intval($quote["author_id"])!=0) {
+                    $user->name=$discord->user->getUser(
+                        ["user.id" => intval($quote["author_id"])]
+                    )->username;
                 } else {
                     $user->name="";
                 }
                 $user->save();
             }
-/*             if(App\DiscordUser::find(intval($quote["added_by"]))==null) {
-                $user=new App\DiscordUser;
-                $user->id=intval($quote["added_by"]);
-                if(intval($quote["added_by"])!=0) {
-                    $user->name=$discord->user->getUser(["user.id" => intval($quote["added_by"])])->username;
-                } else {
-                    $user->name="";
-                }
-                $user->save();
-            } */
         }
 
         //dd($discord->user->getUser(['user.id'=>282966166958374913]));
 
         //dd(App\DiscordUser::find(282966166958374913));
 
-        return view('quotes', ["quotes" => $quotes, "discord" => $discord, "guild" => $guild, "users" => $users]);
+        return view(
+            'quotes', [
+                "quotes" => $quotes,
+                "discord" => $discord,
+                "guild" => $guild,
+                "users" => $users
+            ]
+        );
     }
 );
